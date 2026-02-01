@@ -12,8 +12,6 @@ public final class DatabaseConnection {
 
     public static Connection getConnection() {
         try {
-            // при необходимости можно раскомментировать
-            // Class.forName("org.postgresql.Driver");
 
             return DriverManager.getConnection(
                     DbConfig.URL,

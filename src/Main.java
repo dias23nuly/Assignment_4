@@ -14,33 +14,23 @@ import service.interfaces.MediaService;
 import service.interfaces.PlaylistService;
 import utils.ReflectionUtils;
 import utils.SortingUtils;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import utils.DatabaseConnection;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        // repositories (DIP)
         CategoryRepository categoryRepo = new JdbcCategoryRepository();
         MediaRepository mediaRepo = new JdbcMediaRepository();
         PlaylistRepository playlistRepo = new JdbcPlaylistRepository();
 
-        // services (DIP)
         MediaService mediaService = new MediaServiceImpl(mediaRepo, categoryRepo);
         PlaylistService playlistService = new PlaylistServiceImpl(playlistRepo, mediaRepo);
 
-        // controllers
         MediaController mediaController = new MediaController(mediaService);
         PlaylistController playlistController = new PlaylistController(playlistService);
 
-        // ===== demo data =====
-        // category must exist in DB. Create if needed:
         Category pop = categoryRepo.findByName("Pop").orElseGet(() -> categoryRepo.create(new Category("Pop")));
 
-        // Polymorphism through base class ref (as in your README idea) :contentReference[oaicite:18]{index=18}
         MediaContentBase m1 = new Song("Starboy", 210, 0, new Category(pop.getId(), pop.getName()), "The Weeknd");
         MediaContentBase m2 = new Podcast("Tech Talk", 600, 1000, new Category(pop.getId(), pop.getName()), "Dias");
 

@@ -146,7 +146,6 @@ public class JdbcMediaRepository implements MediaRepository {
         Category category = new Category(rs.getInt("category_id"), rs.getString("category_name"));
         MediaType type = MediaType.valueOf(rs.getString("type"));
 
-        // OCP/LSP: легко добавлять новые subtype без правки логики сервиса (тут только маппинг)
         MediaContentBase m = switch (type) {
             case SONG -> new Song(rs.getString("name"), rs.getInt("duration_seconds"),
                     rs.getInt("price_kzt"), category, null);

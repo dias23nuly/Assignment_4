@@ -25,20 +25,17 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public MediaContentBase create(MediaContentBase media) {
 
-        // validation in service (as required)
         try {
             media.validate();
         } catch (IllegalArgumentException e) {
             throw new InvalidInputException("Invalid media: " + e.getMessage());
         }
 
-        // FK category must exist
         categoryRepo.findById(media.getCategory().getId())
                 .orElseThrow(() -> new InvalidInputException(
                         "Category not found: id=" + media.getCategory().getId()
                 ));
 
-        // duplicate check
         if (mediaRepo.existsByNameAndType(media.getName(), media.getType())) {
             throw new DuplicateResourceException("Duplicate: " + media.getName() + " " + media.getType());
         }
