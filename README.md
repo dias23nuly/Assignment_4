@@ -60,3 +60,9 @@ Sort by duration
 Filter by type
 Validatable
 
+
+
+
+## RESULTS
+![RESULT](screens/result1.png)
+![RESULT](screens/result2.png)
